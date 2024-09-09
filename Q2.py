@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Resolucao da questao 2 da prova 3 de 2014 do JBA
-#  Assunto: Sistema de EDO
-#
+#  Resolucao da questao 2 da prova 2 de 2014 do JBA
+#  
 #  Copyright 2014 Róbinson Erazo <robinson@gmail.com>
 #  
 #  This program is free software; you can redistribute it and/or modify
@@ -71,7 +70,7 @@ if __name__ == '__main__':
         print(x_min, F(x_min))
         
         #Código para escrever arquivo de saída
-        file = open("robinson_P3_Q3.txt", "w")
+        file = open("robinson_P2_Q2.txt", "w")
         for i in range(1, n+1):
                 j=i-1
                 file.write(str(x_min[j]))

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  Resolucao da questao 1 da prova 3 de 2014 do JBA.
-#  Assunto Integracao
+#  Resolucao da questao 1 da prova 2 de 2014 do JBA
 #  
 #  Copyright 2014 Róbinson Erazo <robinson@gmail.com>
 #  
@@ -23,51 +22,65 @@
 #  
 #  
  
-
-# Bibliotecas científicas e para manipulação de arrays
-import scipy.integrate as integ
+#Importacao das bibliotecas cientificas 
+#import pylab
 import scipy as sp
-import pylab as pl
+import scipy.optimize as opt
+#import matplotlib.pyplot as plt
+#import mpl_toolkits.mplot3d.axes3d as p3d
+#from matplotlib import cm
+
+#FUNÇÕES
+def F(x):
+        n = 176
+        som = 0.
+        for i in sp.arange(n-2):
+                j = i + 1
+                som += (j + x[i] + x[i+1] + x[i+2])**4
+        return n + som
 
 def main():
-	
-	return 0
+        return 0
+
 
 #PRINCIPAL
 
 if __name__ == '__main__':
-    main() 
-    
-    #Adaptive Gauss quadrature using QUADPACK 
-    f = lambda x: 1/sp.sqrt(abs(sp.sin(x)))
-    # ponto x=sp.pi tem comportamento extremo (tende ao inf) por isso eh eliminado
-    # no argumento points.
-    integral, abs_error = integ.quad(f, a = 0.0001, b = 4, epsabs=1.49e-8, epsrel=1.e-18, points=[sp.pi])
-    print("Numerical Result =" , integral )
-    print("Analytical Result =" , 0)
-    print("Absolut Error =" , abs_error)
-    
-    # Integral de Simpson
-    x1 = sp.array([0.0001,1,2,sp.pi-1e-80]) #sao os pontos para interpolar
-    x2 = sp.array([sp.pi+1e-80,4])
-    integral1 =  integ.simps(f(x1), x1, dx = 1.0)
-    integral2 =  integ.simps(f(x2), x2, dx = 1.0)
-    print("\n\nNumerical Result =" , integral1+integral2 )
-    print("Analytical Result =" , 0 )
-    
-    #Código para escrever arquivo de saída
-    file  = open('robinson_P3_Q1.txt', "w")
-    file.write(str(integral))
-    file.write("\n")
-    file.write(str(abs_error))
+        main()
 
-    file.close()
+        n = 176
+        x0 = 5*sp.ones(n)
+
+        #x_min = opt.fmin_powell(F, x0) # Fmin = 176.127
         
-    #Plotagem
-    x = sp.linspace(0.0001, 4.0, num=5000)
-    pl.plot(x, f(x))
-    pl.xlabel('x')
-    pl.ylabel('f(x)')
-    pl.grid(True)
-    pl.savefig("ode.png")
-    pl.show()
+        x_min = opt.fmin_bfgs(F, x0) # Fmin = 176.000027
+        
+        #x_min = opt.fmin(F, x0) # Fmin = 24015232331.13
+        
+        #lim_inf = -300*sp.ones(n) 
+        #lim_sup = 300 * sp.ones(n) 
+        
+        #ranges[:] = (lim_inf[:],lim_sup[:])  
+        
+        #x_min = opt.brute(F, ranges , Ns = 10)
+        
+        #x_min = opt.leastsq(F, x0)
+        
+        print(F(x_min))
+        
+        #Código para escrever arquivo de saída
+        file = open("robinson_P2_Q1.txt", "w")
+        for i in range(1, n+1):
+                j=i-1
+                file.write(str(x_min[j]))
+                file.write("\n")
+        file.write("\n")
+        file.write(str(F(x_min)))
+
+        file.close()
+
+
+
+
+
+
